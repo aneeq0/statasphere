@@ -26,7 +26,7 @@ export function Logo({ inverted = false, className }: LogoProps) {
         height="36"
         viewBox="0 0 48 48"
         fill="none"
-        className="size-8 sm:size-9"
+        className="size-10 sm:size-11"
         aria-hidden="true"
       >
         <defs>
@@ -58,7 +58,7 @@ export function Logo({ inverted = false, className }: LogoProps) {
         />
       </svg>
       <span
-        className="text-[1.125rem] font-medium lowercase leading-none tracking-[-0.045em] sm:text-[1.25rem]"
+        className="text-[1.35rem] font-medium lowercase leading-none tracking-[-0.045em] sm:text-[1.5rem]"
         style={{ color: word }}
       >
         statasphere

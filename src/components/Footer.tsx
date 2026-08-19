@@ -11,10 +11,9 @@ const legalLinks = [
 ] as const
 
 const productLinks = [
-  { label: 'Product', href: '/#product' },
+  { label: 'Platform', href: '/#problem' },
   { label: 'How It Works', href: '/#how-it-works' },
   { label: 'Intelligence', href: '/#intelligence' },
-  { label: 'Connectors', href: '/#connectors' },
   { label: 'Contact', href: '/#contact' },
 ] as const
 
@@ -69,13 +68,13 @@ export function Footer() {
                   </li>
                 ))}
                 <li>
-                  <a
+                  {/* <a
                     href={LOGIN_URL}
                     rel="noopener noreferrer"
                     className="inline-flex min-h-11 items-center text-[0.9375rem] text-white/70 transition-colors hover:text-white lg:min-h-0"
                   >
                     Login
-                  </a>
+                  </a> */}
                 </li>
               </ul>
             </nav>

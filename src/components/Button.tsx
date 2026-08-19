@@ -16,6 +16,7 @@ const variants = {
 const sizes = {
   default: 'h-12 px-6 text-[0.9375rem]',
   sm: 'h-10 px-5 text-[0.8125rem]',
+  lg: 'h-14 px-7 text-[1.0625rem]',
 } as const
 
 type Variant = keyof typeof variants
@@ -48,7 +49,10 @@ export function Button(props: ButtonAsLink | ButtonAsButton) {
       {children}
       {arrow ? (
         <ArrowRight
-          className="size-4 transition-transform duration-200 group-hover:translate-x-0.5 motion-reduce:transition-none"
+          className={cn(
+            'transition-transform duration-200 group-hover:translate-x-0.5 motion-reduce:transition-none',
+            size === 'lg' ? 'size-5' : 'size-4',
+          )}
           aria-hidden="true"
         />
       ) : null}

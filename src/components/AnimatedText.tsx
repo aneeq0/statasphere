@@ -1,10 +1,10 @@
-import { useEffect, useRef, useState } from 'react'
+import { useEffect, useRef, useState, type ReactNode } from 'react'
 import { cn } from '../lib/cn'
 import { usePrefersReducedMotion } from '../hooks/usePrefersReducedMotion'
 
 type AnimatedLinesProps = {
   id?: string
-  lines: readonly string[]
+  lines: readonly ReactNode[]
   as?: 'h1' | 'h2' | 'p'
   className?: string
   delay?: number
@@ -46,7 +46,7 @@ export function AnimatedLines({
   return (
     <Tag id={id} ref={ref as never} className={cn('text-balance', className)}>
       {lines.map((line, lineIndex) => (
-        <span key={line} className="block overflow-hidden">
+        <span key={lineIndex} className="block overflow-hidden">
           <span
             className="block"
             style={

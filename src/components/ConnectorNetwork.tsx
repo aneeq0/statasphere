@@ -4,7 +4,23 @@ import { usePrefersReducedMotion } from '../hooks/usePrefersReducedMotion'
 import { PlatformIcon } from './PlatformIcon'
 import { SphereMark } from './SphereMark'
 
-const outerRing = [
+const heroNodes = [
+  { name: 'Google Ads', x: 50, y: 4 },
+  { name: 'Meta', x: 83, y: 17 },
+  { name: 'BigCommerce', x: 95, y: 50 },
+  { name: 'TikTok', x: 84, y: 82 },
+  { name: 'Snapchat', x: 53, y: 96 },
+  { name: 'Amazon Ads', x: 18, y: 87 },
+  { name: 'Google Analytics', x: 4, y: 60 },
+  { name: 'ChatGPT', x: 8, y: 28 },
+  { name: 'Google Search Console', x: 27, y: 15 },
+  { name: 'Shopify', x: 69, y: 9 },
+  { name: 'Google Merchant Center', x: 22, y: 44 },
+] as const
+
+const heroRays = [-90, -58, -18, 24, 63, 100, 142, 178, 214, 252, 314]
+
+const sectionOuterRing = [
   'Google Ads',
   'Meta',
   'TikTok',
@@ -13,7 +29,7 @@ const outerRing = [
   'ChatGPT',
 ] as const
 
-const innerRing = [
+const sectionInnerRing = [
   'Shopify',
   'BigCommerce',
   'Google Merchant Center',
@@ -29,40 +45,168 @@ function pointOnRing(index: number, count: number, radius: number, offset = 0) {
   }
 }
 
-function Satellite({
-  name,
-  x,
-  y,
-}: {
-  name: string
-  x: number
-  y: number
-}) {
-  const prominent = connectors.find((item) => item.name === name)?.prominent
+type ConnectorNetworkProps = {
+  variant?: 'section' | 'hero'
+}
 
+function HeroOrbital({ reduced }: { reduced: boolean }) {
   return (
-    <li
-      className={cn(
-        'absolute z-10 flex -translate-x-1/2 -translate-y-1/2 items-center gap-2.5 rounded-full border bg-white/95 py-1.5 pl-1.5 pr-4 shadow-[0_12px_32px_-16px_rgba(5,7,23,0.4)] backdrop-blur-md transition-transform duration-200 hover:scale-[1.04]',
-        prominent ? 'border-navy/25' : 'border-navy/10',
-      )}
-      style={{ left: `${x}%`, top: `${y}%` }}
+    <div
+      className="relative mx-auto w-full max-w-[40rem]"
+      role="img"
+      aria-label="Statasphere connecting ChatGPT, BigCommerce, Google Ads, Google Merchant Center, Google Search Console, Google Analytics, Meta, TikTok, Snapchat, Amazon Ads and Shopify"
     >
-      <PlatformIcon name={name} size="sm" tone="solid" />
-      <span className="whitespace-nowrap text-[0.8125rem] tracking-[-0.02em] text-navy">{name}</span>
-    </li>
+      <div className="relative aspect-square w-full">
+        <div className="pointer-events-none absolute left-1/2 top-1/2 size-[95.3%] -translate-x-1/2 -translate-y-1/2 rounded-full border-[3px] border-dashed border-navy/[0.11]" />
+        <div className="pointer-events-none absolute left-1/2 top-1/2 size-[67.2%] -translate-x-1/2 -translate-y-1/2 rounded-full border-2 border-accent/55 shadow-[inset_0_0_90px_rgba(220,174,202,0.15)]" />
+        <div className="pointer-events-none absolute left-1/2 top-1/2 size-[42.2%] -translate-x-1/2 -translate-y-1/2 rounded-full border-2 border-navy/10" />
+
+        {heroRays.map((deg) => (
+          <div
+            key={deg}
+            className="absolute left-1/2 top-1/2 z-[1] h-[1.5px] w-[46.875%] origin-left bg-gradient-to-r from-navy/15 to-navy/10"
+            style={{ transform: `rotate(${deg}deg)` }}
+            aria-hidden="true"
+          />
+        ))}
+
+        {!reduced
+          ? [1, 2, 3, 4].map((n) => (
+              <span key={n} className={`proto-flow proto-flow-${n}`} aria-hidden="true">
+                <span className="absolute left-1/2 top-1/2 size-[9px] -translate-x-1/2 -translate-y-1/2 rounded-full bg-accent shadow-[0_0_0_5px_rgba(220,174,202,0.08)]" />
+              </span>
+            ))
+          : null}
+
+        <div className="absolute left-1/2 top-1/2 z-10 flex size-[23.5%] -translate-x-1/2 -translate-y-1/2 items-center justify-center">
+          <SphereMark
+            size={138}
+            className={cn(
+              'h-[90%] w-[90%] drop-shadow-[0_10px_16px_rgba(41,43,89,0.10)]',
+              !reduced && 'proto-logo-spin',
+            )}
+          />
+        </div>
+
+        <ul className="absolute inset-0 z-[5]">
+          {heroNodes.map((node) => (
+            <li
+              key={node.name}
+              className="absolute z-[5] flex -translate-x-1/2 -translate-y-1/2 items-center gap-2.5 whitespace-nowrap rounded-full border border-[#e4e1e8] bg-white/95 py-2.5 pl-2.5 pr-3.5 text-[13px] text-navy shadow-[0_12px_28px_rgba(41,43,89,0.10)]"
+              style={{ left: `${node.x}%`, top: `${node.y}%` }}
+            >
+              <PlatformIcon name={node.name} size="sm" tone="brand" />
+              <span className="tracking-[-0.02em]">{node.name}</span>
+            </li>
+          ))}
+        </ul>
+      </div>
+    </div>
   )
 }
 
-export function ConnectorNetwork() {
-  const reduced = usePrefersReducedMotion()
+function SectionOrbital({ reduced }: { reduced: boolean }) {
   const nodes = [
-    ...outerRing.map((name, index) => ({ name, ...pointOnRing(index, outerRing.length, 38) })),
-    ...innerRing.map((name, index) => ({
+    ...sectionOuterRing.map((name, index) => ({ name, ...pointOnRing(index, sectionOuterRing.length, 38) })),
+    ...sectionInnerRing.map((name, index) => ({
       name,
-      ...pointOnRing(index, innerRing.length, 24, Math.PI / 5),
+      ...pointOnRing(index, sectionInnerRing.length, 24, Math.PI / 5),
     })),
   ]
+
+  return (
+    <div
+      className="relative mx-auto aspect-square w-full max-w-[52rem] lg:max-w-none lg:aspect-[5/4]"
+      role="img"
+      aria-label="Statasphere connecting ChatGPT, BigCommerce, Google Ads, Google Merchant Center, Google Search Console, Google Analytics, Meta, TikTok, Snapchat, Amazon Ads and Shopify"
+    >
+      <div
+        className="pointer-events-none absolute left-1/2 top-1/2 size-[70%] -translate-x-1/2 -translate-y-1/2 rounded-full bg-accent/20 blur-3xl glow-pulse"
+        aria-hidden="true"
+      />
+
+      {!reduced ? (
+        <div className="pointer-events-none absolute left-1/2 top-1/2 z-[1] size-[78%] -translate-x-1/2 -translate-y-1/2">
+          <div
+            className="radar-sweep size-full rounded-full"
+            style={{
+              background:
+                'conic-gradient(from 0deg, transparent 0%, rgb(220 174 202 / 0.28) 7%, transparent 16%)',
+            }}
+            aria-hidden="true"
+          />
+        </div>
+      ) : null}
+
+      <svg className="absolute inset-0 z-[2] h-full w-full" viewBox="0 0 100 100" fill="none" aria-hidden="true">
+        <circle cx="50" cy="50" r="16" stroke="#292b59" strokeOpacity="0.08" strokeWidth="0.3" />
+        <circle cx="50" cy="50" r="24" stroke="#dcaeca" strokeOpacity="0.45" strokeWidth="0.28" />
+        <circle
+          cx="50"
+          cy="50"
+          r="38"
+          stroke="#292b59"
+          strokeOpacity="0.14"
+          strokeWidth="0.3"
+          strokeDasharray="1.4 1.8"
+          className={reduced ? undefined : 'orb-spin'}
+          style={reduced ? undefined : { transformOrigin: '50px 50px', transformBox: 'view-box' }}
+        />
+        {nodes.map((node, index) => {
+          const d = `M 50 50 L ${node.x} ${node.y}`
+          const dur = `${5.6 + (index % 4) * 0.8}s`
+          return (
+            <g key={node.name}>
+              <path d={d} stroke="#292b59" strokeOpacity="0.12" strokeWidth="0.28" />
+              {!reduced ? (
+                <circle r="0.55" fill="#dcaeca">
+                  <animateMotion dur={dur} begin={`${index * 0.28}s`} repeatCount="indefinite" path={d} />
+                </circle>
+              ) : null}
+            </g>
+          )
+        })}
+      </svg>
+
+      <div className="absolute left-1/2 top-1/2 z-20 flex size-[9.5rem] -translate-x-1/2 -translate-y-1/2 flex-col items-center justify-center rounded-full bg-navy text-center text-soft shadow-[0_24px_60px_-20px_rgba(41,43,89,0.7)] lg:size-[11rem]">
+        <SphereMark size={44} inverted spinning={!reduced} className="lg:h-14 lg:w-14" />
+        <p className="mt-2 text-[0.625rem] font-semibold uppercase tracking-[0.16em] lg:text-[0.6875rem]">
+          Statasphere
+        </p>
+        <p className="mt-0.5 text-[0.5rem] uppercase tracking-[0.14em] text-accent lg:text-[0.5625rem]">
+          Intelligence layer
+        </p>
+      </div>
+
+      <ul className="absolute inset-0 z-10">
+        {nodes.map((node) => (
+          <li
+            key={node.name}
+            className="absolute z-10 -translate-x-1/2 -translate-y-1/2"
+            style={{ left: `${node.x}%`, top: `${node.y}%` }}
+            aria-label={node.name}
+          >
+            <div className="flex items-center gap-2.5 rounded-full border border-navy/10 bg-white/95 py-1.5 pl-1.5 pr-4 shadow-[0_12px_32px_-16px_rgba(5,7,23,0.4)]">
+              <PlatformIcon name={node.name} size="sm" tone="brand" />
+              <span className="whitespace-nowrap text-[0.8125rem] tracking-[-0.02em] text-navy">{node.name}</span>
+            </div>
+          </li>
+        ))}
+      </ul>
+    </div>
+  )
+}
+
+export function ConnectorNetwork({ variant = 'section' }: ConnectorNetworkProps) {
+  const reduced = usePrefersReducedMotion()
+
+  if (variant === 'hero') {
+    return (
+      <div className="relative w-full min-w-0 overflow-visible px-1 sm:px-0">
+        <HeroOrbital reduced={reduced} />
+      </div>
+    )
+  }
 
   return (
     <div>
@@ -78,81 +222,15 @@ export function ConnectorNetwork() {
               key={connector.name}
               className="flex min-h-11 items-center gap-3 rounded-full border border-navy/10 bg-white py-2 pl-2 pr-4"
             >
-              <PlatformIcon name={connector.name} size="sm" tone="solid" />
+              <PlatformIcon name={connector.name} size="sm" tone="brand" />
               <span className="min-w-0 text-[0.9375rem] tracking-[-0.02em] text-navy">{connector.name}</span>
             </li>
           ))}
         </ul>
       </div>
 
-      <div className="relative mx-auto hidden aspect-square w-full max-w-[52rem] lg:block lg:max-w-none lg:aspect-[5/4]">
-        <div
-          className="pointer-events-none absolute left-1/2 top-1/2 size-[70%] -translate-x-1/2 -translate-y-1/2 rounded-full bg-accent/20 blur-3xl glow-pulse"
-          aria-hidden="true"
-        />
-
-        {!reduced ? (
-          <div className="pointer-events-none absolute left-1/2 top-1/2 z-[1] size-[78%] -translate-x-1/2 -translate-y-1/2">
-            <div
-              className="radar-sweep size-full rounded-full"
-              style={{
-                background:
-                  'conic-gradient(from 0deg, transparent 0%, rgb(220 174 202 / 0.28) 7%, transparent 16%)',
-              }}
-              aria-hidden="true"
-            />
-          </div>
-        ) : null}
-
-        <svg className="absolute inset-0 z-[2] h-full w-full" viewBox="0 0 100 100" fill="none" aria-hidden="true">
-          <circle cx="50" cy="50" r="16" stroke="#292b59" strokeOpacity="0.08" strokeWidth="0.3" />
-          <circle cx="50" cy="50" r="24" stroke="#dcaeca" strokeOpacity="0.45" strokeWidth="0.28" />
-          <circle
-            cx="50"
-            cy="50"
-            r="38"
-            stroke="#292b59"
-            strokeOpacity="0.14"
-            strokeWidth="0.3"
-            strokeDasharray="1.4 1.8"
-            className={reduced ? undefined : 'orb-spin'}
-            style={{ transformOrigin: '50px 50px' }}
-          />
-          {nodes.map((node, index) => {
-            const d = `M 50 50 L ${node.x} ${node.y}`
-            return (
-              <g key={node.name}>
-                <path d={d} stroke="#292b59" strokeOpacity="0.12" strokeWidth="0.28" />
-                {!reduced ? (
-                  <circle r="0.55" fill="#dcaeca">
-                    <animateMotion
-                      dur={`${5 + (index % 4) * 0.7}s`}
-                      begin={`${index * 0.22}s`}
-                      repeatCount="indefinite"
-                      path={d}
-                    />
-                  </circle>
-                ) : null}
-              </g>
-            )
-          })}
-        </svg>
-
-        <div className="absolute left-1/2 top-1/2 z-20 flex size-[9.5rem] -translate-x-1/2 -translate-y-1/2 flex-col items-center justify-center rounded-full bg-navy text-center text-soft shadow-[0_24px_60px_-20px_rgba(41,43,89,0.7)] lg:size-[11rem]">
-          <SphereMark size={44} inverted spinning={!reduced} className="lg:h-14 lg:w-14" />
-          <p className="mt-2 text-[0.625rem] font-semibold uppercase tracking-[0.16em] lg:text-[0.6875rem]">
-            Statasphere
-          </p>
-          <p className="mt-0.5 text-[0.5rem] uppercase tracking-[0.14em] text-accent lg:text-[0.5625rem]">
-            Intelligence layer
-          </p>
-        </div>
-
-        <ul className="absolute inset-0 z-10">
-          {nodes.map((node) => (
-            <Satellite key={node.name} name={node.name} x={node.x} y={node.y} />
-          ))}
-        </ul>
+      <div className="hidden lg:block">
+        <SectionOrbital reduced={reduced} />
       </div>
     </div>
   )

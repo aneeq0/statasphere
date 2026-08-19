@@ -1,4 +1,3 @@
-import { ConnectorNetwork } from '../components/ConnectorNetwork'
 import { Container } from '../components/Container'
 import { FadeIn } from '../components/FadeIn'
 import { Grid, GridItem } from '../components/Grid'
@@ -28,10 +27,6 @@ export function Ecosystem() {
             </FadeIn>
           </GridItem>
         </Grid>
-
-        <FadeIn className="mt-16">
-          <ConnectorNetwork />
-        </FadeIn>
       </Container>
     </Section>
   )

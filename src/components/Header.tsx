@@ -9,10 +9,9 @@ import { Link } from './Link'
 import { Logo } from './Logo'
 
 const navItems = [
-  { label: 'Product', href: '/#product', id: 'product' },
-  { label: 'How It Works', href: '/#how-it-works', id: 'how-it-works' },
+  { label: 'Platform', href: '/#problem', id: 'problem' },
   { label: 'Intelligence', href: '/#intelligence', id: 'intelligence' },
-  { label: 'Connectors', href: '/#connectors', id: 'connectors' },
+  { label: 'How It Works', href: '/#how-it-works', id: 'how-it-works' },
   { label: 'Contact', href: '/#contact', id: 'contact' },
 ] as const
 
@@ -91,13 +90,13 @@ export function Header() {
             : 'border-navy/5 bg-soft/70 backdrop-blur-md',
         )}
       >
-        <Container className="grid h-16 grid-cols-[1fr_auto] items-center gap-4 lg:grid-cols-[minmax(0,1fr)_auto_minmax(0,1fr)] lg:h-[4.25rem]">
+        <Container className="grid h-[4.5rem] grid-cols-[1fr_auto] items-center gap-4 lg:grid-cols-[minmax(0,1fr)_auto_minmax(0,1fr)] lg:h-[4.75rem]">
           <div className="flex items-center">
             <Logo />
           </div>
 
           <nav
-            className="hidden items-center rounded-full border border-navy/10 bg-white/80 p-1 shadow-[0_8px_24px_-20px_rgba(5,7,23,0.35)] backdrop-blur-md lg:flex"
+            className="hidden items-center gap-7 lg:flex"
             aria-label="Primary"
           >
             {navItems.map((item) => (
@@ -105,10 +104,10 @@ export function Header() {
                 key={item.href}
                 href={item.href}
                 className={cn(
-                  'whitespace-nowrap rounded-full px-3.5 py-1.5 text-[0.8125rem] font-medium tracking-[-0.01em] transition-colors duration-200',
+                  'whitespace-nowrap py-1.5 text-[0.875rem] font-medium tracking-[-0.01em] transition-colors duration-200',
                   active === item.id
-                    ? 'bg-navy text-soft'
-                    : 'text-navy/65 hover:bg-navy/5 hover:text-navy',
+                    ? 'text-navy'
+                    : 'text-navy/55 hover:text-navy',
                 )}
               >
                 {item.label}
@@ -124,8 +123,8 @@ export function Header() {
             >
               Login
             </a>
-            <Button href="/#product" size="sm">
-              See Statasphere
+            <Button href="/#problem" size="sm">
+              Explore Statasphere
             </Button>
           </div>
 
@@ -167,7 +166,7 @@ export function Header() {
         id={menuId}
         ref={panelRef}
         className={cn(
-          'fixed inset-x-0 top-0 z-50 flex h-dvh max-h-dvh flex-col overflow-y-auto overscroll-contain bg-soft pt-[calc(4rem+env(safe-area-inset-top,0px))] transition-opacity duration-300 lg:hidden',
+          'fixed inset-x-0 top-0 z-50 flex h-dvh max-h-dvh flex-col overflow-y-auto overscroll-contain bg-soft pt-[calc(4.5rem+env(safe-area-inset-top,0px))] transition-opacity duration-300 lg:hidden',
           open ? 'visible opacity-100' : 'invisible opacity-0',
         )}
         aria-hidden={!open}
@@ -211,8 +210,8 @@ export function Header() {
               >
                 Login
               </a>
-              <Button href="/#product" className="w-full" arrow onClick={close} tabIndex={open ? 0 : -1}>
-                See Statasphere
+              <Button href="/#problem" className="w-full" arrow onClick={close} tabIndex={open ? 0 : -1}>
+                Explore Statasphere
               </Button>
             </div>
           </Container>

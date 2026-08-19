@@ -12,8 +12,8 @@
 }
 
 :root {
-  --page-max: 82.5rem;
-  --page-pad: 1.5rem;
+  --page-max: 100%;
+  --page-pad: 48px;
   --grid-gap: 1.5rem;
   --section-y: 5rem;
   --space-2: 8px;
@@ -29,15 +29,9 @@
   --space-30: 120px;
 }
 
-@media (max-width: 359px) {
-  :root {
-    --page-pad: 1.25rem;
-  }
-}
-
 @media (min-width: 768px) {
   :root {
-    --page-pad: 2.5rem;
+    --page-pad: max(80px, 8vw);
     --grid-gap: 2rem;
     --section-y: 6rem;
   }
@@ -45,7 +39,7 @@
 
 @media (min-width: 1024px) {
   :root {
-    --page-pad: 3rem;
+    --page-pad: max(96px, 8vw);
     --section-y: 7rem;
   }
 }
@@ -53,7 +47,7 @@
 @layer base {
   html {
     scroll-behavior: smooth;
-    scroll-padding-top: calc(5.5rem + env(safe-area-inset-top, 0px));
+    scroll-padding-top: calc(6rem + env(safe-area-inset-top, 0px));
     overflow-x: clip;
   }
 
@@ -91,7 +85,8 @@
     min-width: 0;
     max-width: var(--page-max);
     margin-inline: auto;
-    padding-inline: var(--page-pad);
+    padding-left: max(var(--page-pad), env(safe-area-inset-left, 0px));
+    padding-right: max(var(--page-pad), env(safe-area-inset-right, 0px));
   }
 
   .site-grid {
@@ -151,24 +146,29 @@
   }
 
   .section-space {
-    padding-block: var(--section-y);
+    padding-top: calc(var(--section-y) * 0.55);
+    padding-bottom: var(--section-y);
   }
 
   .section-space-sm {
-    padding-block: var(--space-16);
+    padding-top: var(--space-10);
+    padding-bottom: var(--space-16);
   }
 
   .section-space-lg {
-    padding-block: var(--space-24);
+    padding-top: var(--space-16);
+    padding-bottom: var(--space-24);
   }
 
   @media (min-width: 768px) {
     .section-space-sm {
-      padding-block: var(--space-20);
+      padding-top: var(--space-12);
+      padding-bottom: var(--space-20);
     }
 
     .section-space-lg {
-      padding-block: var(--space-30);
+      padding-top: var(--space-20);
+      padding-bottom: var(--space-30);
     }
   }
 
@@ -387,20 +387,6 @@
   }
 }
 
-.hero-node {
-  animation: float-y 7s ease-in-out infinite;
-}
-
-.hero-node:nth-child(2n) {
-  animation-duration: 8.5s;
-  animation-delay: -1.4s;
-}
-
-.hero-node:nth-child(3n) {
-  animation-duration: 6.4s;
-  animation-delay: -2.2s;
-}
-
 .draw-line {
   stroke-dasharray: 1;
   stroke-dashoffset: 1;
@@ -414,6 +400,148 @@
 
 .orb-spin {
   animation: spin-slow 48s linear infinite;
+}
+
+.orb-spin-gentle {
+  animation: spin-slow 22s linear infinite;
+}
+
+.proto-logo-spin {
+  animation: spin-slow 14s linear infinite;
+}
+
+.proto-flow {
+  position: absolute;
+  inset: 0;
+  z-index: 3;
+  pointer-events: none;
+}
+
+.proto-flow-1 {
+  animation: proto-flow-1 4.8s ease-in-out infinite;
+}
+
+.proto-flow-2 {
+  animation: proto-flow-2 5.6s ease-in-out infinite 0.8s;
+}
+
+.proto-flow-3 {
+  animation: proto-flow-3 5.2s ease-in-out infinite 1.4s;
+}
+
+.proto-flow-4 {
+  animation: proto-flow-4 6s ease-in-out infinite 2s;
+}
+
+@keyframes proto-flow-1 {
+  0%,
+  100% {
+    transform: translate(0, 0);
+    opacity: 0.15;
+  }
+  50% {
+    transform: translate(0, -32.03%);
+    opacity: 0.95;
+  }
+}
+
+@keyframes proto-flow-2 {
+  0%,
+  100% {
+    transform: translate(0, 0);
+    opacity: 0.15;
+  }
+  50% {
+    transform: translate(27.34%, -16.41%);
+    opacity: 0.95;
+  }
+}
+
+@keyframes proto-flow-3 {
+  0%,
+  100% {
+    transform: translate(0, 0);
+    opacity: 0.15;
+  }
+  50% {
+    transform: translate(-28.91%, 10.94%);
+    opacity: 0.95;
+  }
+}
+
+@keyframes proto-flow-4 {
+  0%,
+  100% {
+    transform: translate(0, 0);
+    opacity: 0.15;
+  }
+  50% {
+    transform: translate(22.66%, 23.44%);
+    opacity: 0.95;
+  }
+}
+
+@keyframes eco-sat-float {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-3.5px);
+  }
+}
+
+.conclusion-stamp::before,
+.conclusion-stamp::after {
+  content: "";
+  position: absolute;
+  inset: 2px;
+  border-radius: 9999px;
+  border: 1px solid rgb(220 174 202 / 0.28);
+  animation: conclusion-ripple 4.2s ease-out infinite;
+  pointer-events: none;
+}
+
+.conclusion-stamp::after {
+  animation-delay: 2s;
+}
+
+@keyframes conclusion-ripple {
+  0% {
+    opacity: 0;
+    transform: scale(0.72);
+  }
+  22% {
+    opacity: 0.45;
+  }
+  100% {
+    opacity: 0;
+    transform: scale(1.28);
+  }
+}
+
+.conclusion-ring {
+  animation: spin-slow 64s linear infinite;
+  transform-origin: 50% 50%;
+}
+
+.conclusion-mark {
+  animation: eco-sat-float 6.8s ease-in-out infinite;
+}
+
+.conclusion-drift {
+  animation: conclusion-drift 9s ease-in-out infinite alternate;
+}
+
+@keyframes conclusion-drift {
+  0% {
+    transform: translate3d(-8px, 6px, 0);
+    opacity: 0.45;
+  }
+  100% {
+    transform: translate3d(10px, -8px, 0);
+    opacity: 0.9;
+  }
 }
 
 .glow-pulse {
@@ -431,7 +559,87 @@
 }
 
 .radar-sweep {
-  animation: radar-sweep 10s linear infinite;
+  animation: radar-sweep 14s linear infinite;
+}
+
+@keyframes proto-reveal {
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes proto-travel {
+  0% {
+    left: 0%;
+    opacity: 0.15;
+  }
+  12% {
+    opacity: 1;
+  }
+  88% {
+    opacity: 1;
+  }
+  100% {
+    left: 100%;
+    opacity: 0.15;
+  }
+}
+
+@keyframes proto-progress {
+  from {
+    width: 0;
+  }
+  to {
+    width: 100%;
+  }
+}
+
+.proto-reveal {
+  opacity: 0;
+  transform: translateY(14px);
+  animation: proto-reveal 0.6s ease forwards;
+}
+
+.proto-travel {
+  animation: proto-travel 5.4s ease-in-out infinite;
+}
+
+.proto-progress {
+  animation: proto-progress linear forwards;
+}
+
+.product-float {
+  animation: product-float 4.8s ease-in-out infinite;
+}
+
+.product-shine {
+  animation: product-shine 4.8s ease-in-out infinite;
+}
+
+@keyframes product-float {
+  0%,
+  100% {
+    transform: scale(1.04) translateY(0);
+  }
+  50% {
+    transform: scale(1.08) translateY(-6px);
+  }
+}
+
+@keyframes product-shine {
+  0% {
+    transform: translateX(-20%);
+    opacity: 0;
+  }
+  28% {
+    opacity: 0.85;
+  }
+  55%,
+  100% {
+    transform: translateX(380%);
+    opacity: 0;
+  }
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -445,15 +653,17 @@
     transition: none;
   }
 
-  .hero-node,
-  .draw-line,
-  .flow-line,
-  .orb-spin,
-  .glow-pulse,
-  .signal-pulse,
-  .data-sweep,
-  .radar-sweep {
+  .proto-reveal,
+  .proto-travel,
+  .proto-progress,
+  .product-float,
+  .product-shine {
     animation: none !important;
+  }
+
+  .proto-reveal {
+    opacity: 1;
+    transform: none;
   }
 
   .stage-fade,
