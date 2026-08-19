@@ -1,4 +1,4 @@
-import { CONTACT_EMAIL, LEGAL, LOGIN_URL, MAILTO } from '../config'
+import { CONTACT_EMAIL, LEGAL, MAILTO } from '../config'
 import { Container } from './Container'
 import { Grid, GridItem } from './Grid'
 import { Link } from './Link'
