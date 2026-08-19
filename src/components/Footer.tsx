@@ -23,7 +23,7 @@ export function Footer() {
       <Container className="py-16 md:py-20">
         <Grid>
           <GridItem lg={5}>
-            <Logo inverted />
+            <Logo inverted variant="lockup" />
             <p className="body-copy-on-dark mt-6 max-w-sm">
               Channel Intelligence for ecommerce.
             </p>

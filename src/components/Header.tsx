@@ -92,7 +92,7 @@ export function Header() {
       >
         <Container className="grid h-[4.5rem] grid-cols-[1fr_auto] items-center gap-4 lg:grid-cols-[minmax(0,1fr)_auto_minmax(0,1fr)] lg:h-[4.75rem]">
           <div className="flex items-center">
-            <Logo />
+            <Logo variant="lockup" />
           </div>
 
           <nav

@@ -1,18 +1,23 @@
+import logoSrc from '../assets/logo-mark.png'
 import { MAILTO } from '../config'
 import { Button } from '../components/Button'
 import { Container } from '../components/Container'
 import { DataField } from '../components/DataField'
 import { FadeIn } from '../components/FadeIn'
 import { Section } from '../components/Section'
-import { SphereMark } from '../components/SphereMark'
 import { cn } from '../lib/cn'
 import { usePrefersReducedMotion } from '../hooks/usePrefersReducedMotion'
 
-const atmosphere = [
-  { label: 'Spend', className: 'left-[2%] top-[42%]' },
-  { label: 'Visibility', className: 'right-[2%] top-[44%] text-accent/45' },
-  { label: 'Revenue', className: 'left-[10%] bottom-[22%]' },
-  { label: 'Orders', className: 'right-[10%] bottom-[18%] text-accent/45' },
+const atmosphereLeft = [
+  { label: 'Spend', className: 'left-[8%] top-[9%]', delay: '0s' },
+  { label: 'Products', className: 'left-[46%] top-[36%]', delay: '1.4s' },
+  { label: 'Revenue', className: 'left-[14%] bottom-[11%]', delay: '2.6s' },
+] as const
+
+const atmosphereRight = [
+  { label: 'Visibility', className: 'right-[22%] top-[7%] text-accent/45', delay: '0.7s' },
+  { label: 'Channels', className: 'right-[8%] top-[44%] text-accent/45', delay: '1.9s' },
+  { label: 'Orders', className: 'right-[40%] bottom-[16%] text-accent/45', delay: '3.2s' },
 ] as const
 
 export function FinalCTA() {
@@ -28,16 +33,34 @@ export function FinalCTA() {
       <DataField />
 
       {!reduced ? (
-        <div className="pointer-events-none absolute inset-0 hidden lg:block" aria-hidden="true">
-          <div className="relative mx-auto h-full w-full max-w-[38rem]">
-            {atmosphere.map((word, index) => (
+        <div
+          className="pointer-events-none absolute inset-0 hidden lg:grid lg:grid-cols-[minmax(0,1fr)_minmax(0,46rem)_minmax(0,1fr)]"
+          aria-hidden="true"
+        >
+          <div className="relative">
+            {atmosphereLeft.map((word) => (
               <span
                 key={word.label}
                 className={cn(
                   'conclusion-drift absolute text-[0.8125rem] font-semibold uppercase tracking-[0.18em] text-navy/20',
                   word.className,
                 )}
-                style={{ animationDelay: `${index * 0.55}s` }}
+                style={{ animationDelay: word.delay }}
+              >
+                {word.label}
+              </span>
+            ))}
+          </div>
+          <div />
+          <div className="relative">
+            {atmosphereRight.map((word) => (
+              <span
+                key={word.label}
+                className={cn(
+                  'conclusion-drift absolute text-[0.8125rem] font-semibold uppercase tracking-[0.18em] text-navy/20',
+                  word.className,
+                )}
+                style={{ animationDelay: word.delay }}
               >
                 {word.label}
               </span>
@@ -50,61 +73,13 @@ export function FinalCTA() {
         <div className="mx-auto max-w-[46rem] text-center">
           <FadeIn>
             <div className="relative mx-auto mb-8 flex items-center justify-center">
-              <span className="relative z-[2] -mr-8 text-[0.75rem] font-semibold uppercase tracking-[0.18em] text-navy/25 sm:-mr-10 sm:text-[0.8125rem]">
-                Products
-              </span>
-              <div
-                className={cn(
-                  'relative flex size-[10.25rem] shrink-0 items-center justify-center sm:size-[11.5rem]',
-                  !reduced && 'conclusion-stamp',
-                )}
-              >
-              <span className="pointer-events-none absolute inset-[12%] rounded-full bg-accent/15 blur-2xl" />
-              <svg
-                className={cn('absolute inset-0 h-full w-full', !reduced && 'conclusion-ring')}
-                viewBox="0 0 168 168"
-                fill="none"
-                aria-hidden="true"
-              >
-                <circle cx="84" cy="84" r="81" stroke="#292b59" strokeOpacity="0.08" strokeWidth="0.8" />
-                <circle
-                  cx="84"
-                  cy="84"
-                  r="72"
-                  stroke="#dcaeca"
-                  strokeOpacity="0.45"
-                  strokeWidth="0.9"
-                  strokeDasharray="3 4.5"
-                />
-                <defs>
-                  <path
-                    id="commerce-ring"
-                    d="M84 84 m -62 0 a 62 62 0 1 1 124 0 a 62 62 0 1 1 -124 0"
-                  />
-                </defs>
-                <text
-                  fill="#717c91"
-                  fontSize="10.5"
-                  fontWeight="700"
-                  letterSpacing="5.2"
-                  style={{ fontFamily: 'Inter, ui-sans-serif, system-ui, sans-serif' }}
-                >
-                  <textPath href="#commerce-ring" startOffset="21%">
-                    COMMERCE
-                  </textPath>
-                </text>
-              </svg>
-              <SphereMark
-                size={86}
-                className={cn(
-                  'relative z-[1] h-[4.75rem] w-[4.75rem] sm:h-[5.5rem] sm:w-[5.5rem]',
-                  !reduced && 'conclusion-mark',
-                )}
+              <img
+                src={logoSrc}
+                alt="Statasphere"
+                width={211}
+                height={198}
+                className={cn('h-[4.75rem] w-auto sm:h-[5.5rem]', !reduced && 'proto-logo-spin')}
               />
-              </div>
-              <span className="relative z-[2] -ml-8 text-[0.75rem] font-semibold uppercase tracking-[0.18em] text-accent/45 sm:-ml-10 sm:text-[0.8125rem]">
-                Channels
-              </span>
             </div>
           </FadeIn>
 
@@ -128,9 +103,9 @@ export function FinalCTA() {
           </FadeIn>
 
           <FadeIn delayMs={260}>
-            <div className="mx-auto mt-10 max-w-[22rem]">
+            <div className="mx-auto mt-10 w-fit max-w-full px-2">
               <span className="block h-px bg-navy/10" />
-              <p className="mt-6 text-[0.6875rem] font-semibold uppercase tracking-[0.18em] text-muted">
+              <p className="mt-6 whitespace-nowrap text-center text-[clamp(0.55rem,2.5vw,0.6875rem)] font-semibold uppercase tracking-[0.12em] text-muted sm:tracking-[0.18em]">
                 Statasphere
                 <span className="mx-1.5 text-accent/70" aria-hidden="true">
                   ·

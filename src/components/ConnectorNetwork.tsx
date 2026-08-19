@@ -1,3 +1,4 @@
+import logoMark from '../assets/logo-mark.png'
 import { connectors } from '../lib/channels'
 import { cn } from '../lib/cn'
 import { usePrefersReducedMotion } from '../hooks/usePrefersReducedMotion'
@@ -78,11 +79,14 @@ function HeroOrbital({ reduced }: { reduced: boolean }) {
             ))
           : null}
 
-        <div className="absolute left-1/2 top-1/2 z-10 flex size-[23.5%] -translate-x-1/2 -translate-y-1/2 items-center justify-center">
-          <SphereMark
-            size={138}
+        <div className="absolute left-1/2 top-1/2 z-10 flex size-[16%] -translate-x-1/2 -translate-y-1/2 items-center justify-center">
+          <img
+            src={logoMark}
+            alt=""
+            width={211}
+            height={198}
             className={cn(
-              'h-[90%] w-[90%] drop-shadow-[0_10px_16px_rgba(41,43,89,0.10)]',
+              'h-[82%] w-auto drop-shadow-[0_10px_16px_rgba(41,43,89,0.10)]',
               !reduced && 'proto-logo-spin',
             )}
           />
