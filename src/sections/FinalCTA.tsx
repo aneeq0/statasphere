@@ -1,4 +1,4 @@
-import logoSrc from '../assets/logo-mark.png'
+import logoSrc from '../assets/logo-icon.png'
 import { MAILTO } from '../config'
 import { Button } from '../components/Button'
 import { Container } from '../components/Container'
@@ -76,8 +76,8 @@ export function FinalCTA() {
               <img
                 src={logoSrc}
                 alt="Statasphere"
-                width={211}
-                height={198}
+                width={271}
+                height={276}
                 className={cn('h-[4.75rem] w-auto sm:h-[5.5rem]', !reduced && 'proto-logo-spin')}
               />
             </div>

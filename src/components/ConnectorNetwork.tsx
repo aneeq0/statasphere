@@ -19,8 +19,6 @@ const heroNodes = [
   { name: 'Google Merchant Center', x: 22, y: 44 },
 ] as const
 
-const heroRays = [-90, -58, -18, 24, 63, 100, 142, 178, 214, 252, 314]
-
 const sectionOuterRing = [
   'Google Ads',
   'Meta',
@@ -61,15 +59,6 @@ function HeroOrbital({ reduced }: { reduced: boolean }) {
         <div className="pointer-events-none absolute left-1/2 top-1/2 size-[95.3%] -translate-x-1/2 -translate-y-1/2 rounded-full border-[3px] border-dashed border-navy/[0.11]" />
         <div className="pointer-events-none absolute left-1/2 top-1/2 size-[67.2%] -translate-x-1/2 -translate-y-1/2 rounded-full border-2 border-accent/55 shadow-[inset_0_0_90px_rgba(220,174,202,0.15)]" />
         <div className="pointer-events-none absolute left-1/2 top-1/2 size-[42.2%] -translate-x-1/2 -translate-y-1/2 rounded-full border-2 border-navy/10" />
-
-        {heroRays.map((deg) => (
-          <div
-            key={deg}
-            className="absolute left-1/2 top-1/2 z-[1] h-[1.5px] w-[46.875%] origin-left bg-gradient-to-r from-navy/15 to-navy/10"
-            style={{ transform: `rotate(${deg}deg)` }}
-            aria-hidden="true"
-          />
-        ))}
 
         {!reduced
           ? [1, 2, 3, 4].map((n) => (
@@ -156,20 +145,6 @@ function SectionOrbital({ reduced }: { reduced: boolean }) {
           className={reduced ? undefined : 'orb-spin'}
           style={reduced ? undefined : { transformOrigin: '50px 50px', transformBox: 'view-box' }}
         />
-        {nodes.map((node, index) => {
-          const d = `M 50 50 L ${node.x} ${node.y}`
-          const dur = `${5.6 + (index % 4) * 0.8}s`
-          return (
-            <g key={node.name}>
-              <path d={d} stroke="#292b59" strokeOpacity="0.12" strokeWidth="0.28" />
-              {!reduced ? (
-                <circle r="0.55" fill="#dcaeca">
-                  <animateMotion dur={dur} begin={`${index * 0.28}s`} repeatCount="indefinite" path={d} />
-                </circle>
-              ) : null}
-            </g>
-          )
-        })}
       </svg>
 
       <div className="absolute left-1/2 top-1/2 z-20 flex size-[9.5rem] -translate-x-1/2 -translate-y-1/2 flex-col items-center justify-center rounded-full bg-navy text-center text-soft shadow-[0_24px_60px_-20px_rgba(41,43,89,0.7)] lg:size-[11rem]">

@@ -7,6 +7,7 @@ type SectionProps = {
   className?: string
   size?: 'sm' | 'md' | 'lg'
   'aria-labelledby'?: string
+  'aria-label'?: string
 }
 
 export function Section({
@@ -15,11 +16,13 @@ export function Section({
   className,
   size = 'md',
   'aria-labelledby': labelledBy,
+  'aria-label': ariaLabel,
 }: SectionProps) {
   return (
     <section
       id={id}
       aria-labelledby={labelledBy}
+      aria-label={ariaLabel}
       className={cn(
         size === 'sm' && 'section-space-sm',
         size === 'md' && 'section-space',
