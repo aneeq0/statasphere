@@ -68,14 +68,14 @@ function HeroOrbital({ reduced }: { reduced: boolean }) {
             ))
           : null}
 
-        <div className="absolute left-1/2 top-1/2 z-10 flex size-[22%] -translate-x-1/2 -translate-y-1/2 items-center justify-center">
+        <div className="absolute left-1/2 top-1/2 z-10 flex size-[34%] -translate-x-1/2 -translate-y-1/2 items-center justify-center">
           <img
             src={logoSrc}
             alt=""
             width={271}
             height={276}
             className={cn(
-              'h-[90%] w-auto drop-shadow-[0_10px_16px_rgba(41,43,89,0.10)]',
+              'h-full w-auto drop-shadow-[0_10px_16px_rgba(41,43,89,0.10)]',
               !reduced && 'proto-logo-spin',
             )}
           />
